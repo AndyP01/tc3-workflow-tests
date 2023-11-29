@@ -74,6 +74,7 @@ AddMessageFilterClass('') # Call function
 
 $stringArray = $OwnerAndRepo.Split('/');
 
+$OwnerAndRepo
 $owner = $stringArray[0]
 $repo = $stringArray[1]
 
