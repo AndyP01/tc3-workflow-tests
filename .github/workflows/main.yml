@@ -46,7 +46,7 @@ jobs:
 
   postBuild:
     name: Post-build job
-    needs: [test]
+    needs: [build]
     runs-on: VBox-3.1.4024
     steps:
       - name: Run post-build script
