@@ -1,7 +1,3 @@
-param(
-    [string]$OwnerAndRepo
-)
-
 Write-Output "Build script."
 Write-Output "-------------"
 
@@ -72,28 +68,24 @@ int MessagePending(IntPtr hTaskCallee, int dwTickCount, int dwPendingType);
 AddMessageFilterClass('') # Call function
 [EnvDteUtils.MessageFilter]::Register() # Call static Register Filter Method
 
-$stringArray = $OwnerAndRepo.Split('/');
+# Search for the solution file of the checked out project and reurn the full path.
+$solutionPath = Get-ChildItem -Path C:\actions-runner\_work -Filter *.sln -Recurse | %{$_.FullName}
 
-$OwnerAndRepo
-$owner = $stringArray[0]
-$repo = $stringArray[1]
+if ($solutionPath.IsNullOrEmpty){
+    Write-Output 'No solution found.'
+    exit 1
+}
 
-Write-Output 'Owner :' $owner
-Write-Output 'Repo :' $repo
+Write-Output 'Found solution : ' $solutionPath
 
+$dte = new-object -com TcXaeShell.DTE.15.0
+$dte.SuppressUI = $false
+$dte.MainWindow.Visible = $true
 
-#$solutionDir = "C:\dev\mobject-disposable\src\mobject-disposable-library\"
-#$solutionName = "mobject-disposable.sln"
-#$solutionPath = $solutionDir += $solutionName 
+$solution = $dte.Solution
+$solution.Open($solutionPath)
 
-#$dte = new-object -com TcXaeShell.DTE.15.0
-#$dte.SuppressUI = $false
-#$dte.MainWindow.Visible = $true
-
-#$solution = $dte.Solution
-#$solution.Open($solutionPath)
-
-#$projects = $solution.Projects
+$projects = $solution.Projects
 
 #Write-Host("Checking for projects...")
 #if (-not $projects.Count > 0) {
@@ -102,7 +94,7 @@ Write-Output 'Repo :' $repo
 #  exit 1
 #}
 
-#Write-Host(" - " + $projects.Count + " found.")
+Write-Host(" - " + $projects.Count + " found.")
 
 #$testProject = $null
 #
@@ -115,7 +107,7 @@ Write-Output 'Repo :' $repo
 #  }
 #}
 
-#$testProject = $projects.Item(1) # how to select this project by name?
+$testProject = $projects.Item(1) # how to select this project by name?
 
 #if ($testProject -eq $null) {
 #  Write-Host(" - Test project not found.")
@@ -123,23 +115,23 @@ Write-Output 'Repo :' $repo
 #  exit 1
 #}
 
-#$systemManager = $testProject.Object
+$systemManager = $testProject.Object
 
-#$configManager = $systemManager.ConfigurationManager
-#$configManager.ActiveTargetPlatform = "TwinCAT RT (x64)"
+$configManager = $systemManager.ConfigurationManager
+$configManager.ActiveTargetPlatform = "TwinCAT RT (x64)"
 
-##$systemManager.SetTargetNetId("UmRT_Default")
-#$systemManager.SetTargetNetId("192.168.4.1.1.1")
+#$systemManager.SetTargetNetId("UmRT_Default")
+$systemManager.SetTargetNetId("192.168.4.1.1.1")
 
 
-#$plcProject = $systemManager.LookupTreeItem("TIPC^Main")
-#$plcProject.BootProjectAutostart = $true
-#$plcProject.GenerateBootProject($true)
+$plcProject = $systemManager.LookupTreeItem("TIPC^Main")
+$plcProject.BootProjectAutostart = $true
+$plcProject.GenerateBootProject($true)
 
-#$systemManager.ActivateConfiguration()
-#$systemManager.StartRestartTwinCAT() 
+$systemManager.ActivateConfiguration()
+$systemManager.StartRestartTwinCAT() 
 
-#$dte.Quit()
+$dte.Quit()
 
 [EnvDTEUtils.MessageFilter]::Revoke()
 
