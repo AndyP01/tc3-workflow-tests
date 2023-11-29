@@ -18,6 +18,7 @@ jobs:
         run: |
           echo "Triggered by $env:GITHUB_ACTOR"
           echo "Github Ref: $env:GITHUB_REF"
+          echo "Owner and repo: $env:GITHUB_REPOSITORY"
             
   checkout:
     name: Checkout project job
