@@ -1,2 +1,2 @@
-cd\
-dir
+echo "Build script."
+echo "-------------"
