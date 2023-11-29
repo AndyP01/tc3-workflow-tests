@@ -63,7 +63,7 @@
         </Parameter>
         <Parameter ListName="GVL_PARAM_TCUNIT">
           <Key>XUNITFILEPATH</Key>
-          <Value>'./tcunit_xunit_testresults.xml'</Value>
+          <Value>'c:/temp/tcunit_xunit_testresults.xml'</Value>
         </Parameter>
       </Parameters>
     </PlaceholderReference>

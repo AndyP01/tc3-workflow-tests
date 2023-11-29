@@ -21,19 +21,6 @@ jobs:
   checkoutProject:
     name: Checkout project job
     runs-on: VBox-3.1.4024
-    env:
-      repo_name: ${{ secrets.REPO_NAME }}
-    steps:
-      - name: Checking provided repo name
-        if: ${{ env.repo_name == null || env.repo_name == '' }}
-        run: |
-          echo "No repo name provided - cancelling checkout."
-          exit 1
-
-      - name: Repo name received
-        run: |
-          echo "Repo name has been provided. Continuing..."
-
       # Checks-out repository under $GITHUB_WORKSPACE, so job can access it
       - name: Checking out project
         uses: actions/checkout@v4
@@ -44,7 +31,7 @@ jobs:
     runs-on: VBox-3.1.4024
     steps:
       - name: Run pre-build script
-        run: ./scripts/pre-build-script.ps1
+        run: ./scripts/pre-build-script.ps1 -testDir 'C:/temp'
         
   build:
     name: Build job
