@@ -42,7 +42,7 @@ jobs:
     runs-on: VBox-3.1.4024
     steps:
       - name: Run build script
-        run: ./scripts/build-script.ps1 ${GITHUB_REPOSITORY}
+        run: ./scripts/build-script.ps1 $env:GITHUB_REPOSITORY
 
   postBuild:
     name: Post-build job
