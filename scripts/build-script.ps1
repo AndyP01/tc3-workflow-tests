@@ -7,7 +7,8 @@ Write-Output "-------------"
 
 function AddMessageFilterClass 
 { 
-$source = @‘ 
+$source = @'
+
 namespace EnvDteUtils
 {
 using System; 
@@ -64,7 +65,7 @@ int RetryRejectedCall(IntPtr hTaskCallee, int dwTickCount, int dwRejectType);
 int MessagePending(IntPtr hTaskCallee, int dwTickCount, int dwPendingType);
 }
 }
-‘@
+'@
  Add-Type -TypeDefinition $source
 }
 
@@ -76,8 +77,8 @@ $stringArray = $OwnerAndRepo.Split('/');
 $owner = $stringArray[0]
 $repo = $stringArray[1]
 
-Write-Output 'Owner : ' + $owner
-Write-Output 'Repo : ' + $repo
+Write-Output 'Owner :' $owner
+Write-Output 'Repo :' $repo
 
 
 #$solutionDir = "C:\dev\mobject-disposable\src\mobject-disposable-library\"
