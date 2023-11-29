@@ -16,9 +16,9 @@ jobs:
     steps:
       - name: Display workflow information
         run: |
-          echo "Triggered by $env:GITHUB_ACTOR"
-          echo "Github Ref: $env:GITHUB_REF"
-          echo "Owner and repo: $env:GITHUB_REPOSITORY"
+          Write-Output "Triggered by $env:GITHUB_ACTOR"
+          Write-Output "Github Ref: $env:GITHUB_REF"
+          Write-Output "Owner and repo: $env:GITHUB_REPOSITORY"
             
   checkout:
     name: Checkout project job
@@ -32,11 +32,9 @@ jobs:
     name: Pre-build job
     needs: [checkout]
     runs-on: VBox-3.1.4024
-    env:
-      TEST_PATH: C:/temp
     steps:
       - name: Run pre-build script
-        run: ./scripts/pre-build-script.ps1 -testDir ${{ env.TEST_PATH }}
+        run: ./scripts/pre-build-script.ps1
         
   build:
     name: Build job

@@ -1,2 +1,2 @@
-echo "Build script."
-echo "-------------"
+Write-Output "Build script."
+Write-Output "-------------"

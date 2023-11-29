@@ -3,6 +3,6 @@ param(
 )
 
 
-echo "pre-build actions."
-echo "------------------"
-echo $testDir
+Write-Output "pre-build actions."
+Write-Output "------------------"
+Write-Output $testDir
