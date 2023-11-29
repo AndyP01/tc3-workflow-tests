@@ -87,7 +87,7 @@ $solution.Open($solutionPath)
 
 $projects = $solution.Projects
 
-#Write-Host("Checking for projects...")
+Write-Host("Checking for projects...")
 #if (-not $projects.Count > 0) {
 #  Write-Host(" - No projects found in Solution.")
 #  $dte.Quit()
@@ -96,16 +96,16 @@ $projects = $solution.Projects
 
 Write-Host(" - " + $projects.Count + " found.")
 
-#$testProject = $null
-#
-#foreach ($project in $projects){
-# "NAME: " + $project.Name
+$testProject = $null
+
+foreach ($project in $projects){
+ "NAME: " + $project.Name
 #  
 #  if ($project.Name -eq "mobject-disposable-test-project") {
 #    $testProject = $projects.Item($project)
 #    break
 #  }
-#}
+}
 
 $testProject = $projects.Item(1) # how to select this project by name?
 
