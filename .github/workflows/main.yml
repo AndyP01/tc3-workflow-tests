@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+    
+  info:
+    name: Workflow information
+    runs-on: VBox-3.1.4024
+    steps:
+      - name: Display workflow information
+        run: |
+          echo "Triggered by $env:GITHUB_ACTOR"
+          echo "Github Ref: $env:GITHUB_REF"
+            
+  checkoutProject:
+    name: Checkout project job
+    runs-on: VBox-3.1.4024
+    env:
+      repo_name: ${{ secrets.REPO_NAME }}
+    steps:
+      - name: Checking provided repo name
+        if: ${{ env.repo_name == null || env.repo_name == '' }}
+        run: |
+          echo "No repo name provided - cancelling checkout."
+          exit 1
+
+      - name: Repo name received
+        run: |
+          echo "Repo name has been provided. Continuing..."
+
+      # Checks-out repository under $GITHUB_WORKSPACE, so job can access it
+      - name: Checking out project
+        uses: actions/checkout@v4
+        
+  preBuild:
+    name: Pre-build job
+    needs: [checkoutProject]
+    runs-on: VBox-3.1.4024
+    steps:
+      - name: Run pre-build script
+        run: ./scripts/pre-build-script.ps1
+        
+  build:
+    name: Build job
+    needs: [preBuild]
+    runs-on: VBox-3.1.4024
+    steps:
+      - name: Run build script
+        run: ./scripts/build-script.ps1
+
+  test:
+    name: Test job
+    needs: [build]
+    runs-on: VBox-3.1.4024
+    env:
+      RESULTS_PATH: C:\tcunit_xunit_testresults.xml
+    steps:
+      - name: Generate Report
+        id: xunit-viewer
+        uses: AutoModality/action-xunit-viewer@v1
+        with:
+          results: ${{ env.RESULTS_PATH }}
+      - name: The generated report
+        run: echo "The report is ${{ steps.xunit-viewer.outputs.report-file }}"    
+      - name: Attach the report
+        uses: actions/upload-artifact@v1
+        with:
+          name: alternate-results-path-reports
+          path: ${{ env.RESULTS_PATH }}
+               
+  postBuild:
+    name: Post-build job
+    needs: [test]
+    runs-on: VBox-3.1.4024
+    steps:
+      - name: Run post-build script
+        run: ./scripts/post-build-script.ps1
+      
