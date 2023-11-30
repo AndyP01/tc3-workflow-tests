@@ -23,12 +23,13 @@ jobs:
         id: test_env
         run: |
           $data = $env:GITHUB_REPOSITORY -split "/"
-          $data[0] >> $GITHUB_OUTPUT
-          $data[1] >> $GITHUB_OUTPUT
+          Write-Output "$owner=$data[0]" >> $env:GITHUB_OUTPUT
+          Write-Output "$repo_name=$data[1]" >> $env:GITHUB_OUTPUT
           
       - name: getData
         run: |
-          Write-Host ${{ steps.test_env.outputs.* }}
+          Write-Host ${{ steps.test_env.outputs.owner }}
+          Write-Host ${{ steps.test_env.outputs.repo_name }}
           
 #        id: testCustomAction
 #        uses: AndyP01/tc3-twincat-build-action@v3
