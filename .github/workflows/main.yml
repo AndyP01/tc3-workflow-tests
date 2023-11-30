@@ -22,7 +22,7 @@ jobs:
       - name: test_env
         id: test_env
         run: |
-          $data = $env:GITHUB_REPOSITORY -split 
+          $data = $env:GITHUB_REPOSITORY.Split("/") 
           $data[0]
           $data[1]
           Write-Output "owner=$data[0]" >> $env:GITHUB_OUTPUT
