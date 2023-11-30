@@ -138,9 +138,8 @@ try {
     $plcProject.BootProjectAutostart = $true
 
     Write-Host " - Generate boot project."
-    $hr = $plcProject.GenerateBootProject($true)
-    $hr
-
+    $plcProject.GenerateBootProject($true)
+    
     Write-Host " - Activate and restart TwinCAT."
     $systemManager.ActivateConfiguration()
     $systemManager.StartRestartTwinCAT()
