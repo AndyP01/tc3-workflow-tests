@@ -16,16 +16,18 @@ jobs:
     steps:
       - name: Display workflow information
         run: |
-          Write-Output "Triggered by $env:GITHUB_ACTOR"
-          Write-Output "Github Ref: $env:GITHUB_REF"
-          Write-Output "Owner and repo: $env:GITHUB_REPOSITORY"
-      - id: testCustomAction
-        name: testCustomAction
-        uses: AndyP01/tc3-twincat-build-action@v3
-        with:
-          targetNetId: '192.168.5.1.1.1'
-      - name: getOutput
-        run: Write-Host ${{ steps.testCustomAction.outputs.exitCode }}
+          Write-Host "Triggered by $env:GITHUB_ACTOR"
+          Write-Host "Github Ref: $env:GITHUB_REF"
+          Write-Host "Owner and repo: $env:GITHUB_REPOSITORY"
+      - name: testCustomAction
+        run: |
+          Write-Host $env:GITHUB_REPOSITORY -split "/"
+#        id: testCustomAction
+#        uses: AndyP01/tc3-twincat-build-action@v3
+#        with:
+#          targetNetId: '192.168.5.1.1.1'
+#      - name: getOutput
+#        run: Write-Host ${{ steps.testCustomAction.outputs.exitCode }}
             
   checkout:
     name: Checkout project job
