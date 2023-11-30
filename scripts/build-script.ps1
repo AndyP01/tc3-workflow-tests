@@ -1,9 +1,9 @@
-Write-Output "Build script."
-Write-Output "-------------"
+Write-Host "Build script."
+Write-Host "-------------"
+Clear-Host
 
-function AddMessageFilterClass 
-{ 
-$source = @'
+function AddMessageFilterClass { 
+    $source = @'
 
 namespace EnvDteUtils
 {
@@ -62,76 +62,100 @@ int MessagePending(IntPtr hTaskCallee, int dwTickCount, int dwPendingType);
 }
 }
 '@
- Add-Type -TypeDefinition $source
+    Add-Type -TypeDefinition $source
 }
 
 AddMessageFilterClass('') # Call function
 [EnvDteUtils.MessageFilter]::Register() # Call static Register Filter Method
 
-# Search for the solution file of the checked out project and reurn the full path.
-$solutionPath = Get-ChildItem -Path C:\actions-runner\_work -Filter *.sln -Recurse | %{$_.FullName}
+# Search for the solution file of the checked out project and return the full path.
+Write-Host "Searching for solution..."
+$solutionPath = Get-ChildItem -Path "C:\actions-runner\_work" -Filter *.sln -Recurse | ForEach-Object { $_.FullName }
 
-if ($solutionPath.IsNullOrEmpty){
-    Write-Output 'No solution found.'
+if ($solutionPath.IsNullOrEmpty) {
+    Write-Host " - No solution found."
     exit 1
 }
 
-Write-Output 'Found solution : ' $solutionPath
+Write-Host " - Found : $($solutionPath)`n"
 
-$dte = new-object -com TcXaeShell.DTE.15.0
-$dte.SuppressUI = $false
-$dte.MainWindow.Visible = $true
+$dte = new-object -ComObject "TcXaeShell.DTE.15.0"
+$dte.SuppressUI = $true
+$dte.MainWindow.Visible = $false
 
 $solution = $dte.Solution
 $solution.Open($solutionPath)
 
 $projects = $solution.Projects
 
-Write-Host("Checking for projects...")
+Write-Host "Checking for projects..."
+Write-Host " - $($projects.Count) found.`n"
+
 #if (-not $projects.Count > 0) {
-#  Write-Host(" - No projects found in Solution.")
+#  Write-Host " - No projects found in Solution.`n"
 #  $dte.Quit()
 #  exit 1
 #}
 
-Write-Host(" - " + $projects.Count + " found.")
+Write-Host("Searching for test project...")
+
+#$testProject = $projects.Item(1) # how to select this project by name?
 
 $testProject = $null
 
-foreach ($project in $projects){
- "NAME: " + $project.Name
-#  
-#  if ($project.Name -eq "mobject-disposable-test-project") {
-#    $testProject = $projects.Item($project)
-#    break
-#  }
+foreach ($project in $projects) {
+    if ($project.Name -like "*test-project") {
+        $testProject = $project
+        Write-Host " - Using: $($project.Name)`n"
+    }
 }
 
-$testProject = $projects.Item(1) # how to select this project by name?
-
 #if ($testProject -eq $null) {
-#  Write-Host(" - Test project not found.")
+#  Write-Host " - Test project not found.`n"
 #  $dte.Quit()
 #  exit 1
 #}
 
-$systemManager = $testProject.Object
+try {
+    Write-Host "Configuring TwinCAT..."
+    $systemManager = $testProject.Object
 
-$configManager = $systemManager.ConfigurationManager
-$configManager.ActiveTargetPlatform = "TwinCAT RT (x64)"
+    Write-Host " - Set active platform."
+    $configManager = $systemManager.ConfigurationManager
+    $configManager.ActiveTargetPlatform = "TwinCAT RT (x64)"
 
-#$systemManager.SetTargetNetId("UmRT_Default")
-$systemManager.SetTargetNetId("192.168.4.1.1.1")
+    Write-Host " - Set target NetId."
+    #$systemManager.SetTargetNetId("UmRT_Default")
+    $systemManager.SetTargetNetId("192.168.4.1.1.1")
 
+    Write-Host " - Lookup PLC project."
+    $plcProject = $systemManager.LookupTreeItem("TIPC^Main")
+    if ($null -eq $plcProject) {
+        Write-Host " - Lookup PLC item failed."
+    }
 
-$plcProject = $systemManager.LookupTreeItem("TIPC^Main")
-$plcProject.BootProjectAutostart = $true
-$plcProject.GenerateBootProject($true)
+    Write-Host " - Set boot project to autostart."
+    $plcProject.BootProjectAutostart = $true
 
-$systemManager.ActivateConfiguration()
-$systemManager.StartRestartTwinCAT() 
+    Write-Host " - Generate boot project."
+    $hr = $plcProject.GenerateBootProject($true)
+    $hr
 
-$dte.Quit()
+    Write-Host " - Activate and restart TwinCAT."
+    $systemManager.ActivateConfiguration()
+    $systemManager.StartRestartTwinCAT()
+    
+    Write-Host "`nDone."
+    #$dte.Quit()
+}
+catch {
+    Write-Output "Exception!"
+}
+finally {
+    if ($null -ne $dte) {
+        $dte.Quit()
+    }
+}
 
 [EnvDTEUtils.MessageFilter]::Revoke()
 
