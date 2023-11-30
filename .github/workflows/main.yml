@@ -19,6 +19,7 @@ jobs:
           Write-Host "Triggered by $env:GITHUB_ACTOR"
           Write-Host "Github Ref: $env:GITHUB_REF"
           Write-Host "Owner and repo: $env:GITHUB_REPOSITORY"
+          
       - name: test_env
         id: test_env
         run: |
