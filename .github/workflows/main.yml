@@ -19,12 +19,13 @@ jobs:
           Write-Output "Triggered by $env:GITHUB_ACTOR"
           Write-Output "Github Ref: $env:GITHUB_REF"
           Write-Output "Owner and repo: $env:GITHUB_REPOSITORY"
-      - name: testCustomAction
-      - id: customAction
+      - id: testCustomAction
+        name: testCustomAction
         uses: AndyP01/tc3-twincat-build-action@v1
         with:
           targetNetId: '192.168.5.1.1.1'
-      - run: Write-Host ${{ steps.customAction.outputs.exitCode }}
+      - name: getOutput
+        run: Write-Host ${{ steps.testCustomAction.outputs.exitCode }}
             
   checkout:
     name: Checkout project job
