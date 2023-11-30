@@ -23,8 +23,8 @@ jobs:
         id: test_env
         run: |
           $data = $env:GITHUB_REPOSITORY -split "/"
-          Write-Output "$owner=$data[0]" >> $env:GITHUB_OUTPUT
-          Write-Output "$repo_name=$data[1]" >> $env:GITHUB_OUTPUT
+          Write-Output "owner=$data[0]" >> $env:GITHUB_OUTPUT
+          Write-Output "repo_name=$data[1]" >> $env:GITHUB_OUTPUT
           
       - name: getData
         run: |
