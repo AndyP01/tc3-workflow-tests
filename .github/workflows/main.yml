@@ -19,12 +19,14 @@ jobs:
           Write-Host "Triggered by $env:GITHUB_ACTOR"
           Write-Host "Github Ref: $env:GITHUB_REF"
           Write-Host "Owner and repo: $env:GITHUB_REPOSITORY"
-      - name: testCustomAction
+      - name: test_env
+        env:
+          JSON_DATA: ${{ toJSON($data) }}
         run: |
           $data = $env:GITHUB_REPOSITORY -split "/"
           $data[0]
           $data[1]
-          ${{ toJSON($data) }}
+          $JSON_DATA
           
 #        id: testCustomAction
 #        uses: AndyP01/tc3-twincat-build-action@v3
