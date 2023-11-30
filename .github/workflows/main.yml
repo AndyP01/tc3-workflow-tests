@@ -21,7 +21,10 @@ jobs:
           Write-Host "Owner and repo: $env:GITHUB_REPOSITORY"
       - name: testCustomAction
         run: |
-          Write-Host $env:GITHUB_REPOSITORY -split "/"
+          $owner, $repoName = $env:GITHUB_REPOSITORY -split "/"
+          $owner
+          $repo_name
+          
 #        id: testCustomAction
 #        uses: AndyP01/tc3-twincat-build-action@v3
 #        with:
