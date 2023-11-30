@@ -20,13 +20,15 @@ jobs:
           Write-Host "Github Ref: $env:GITHUB_REF"
           Write-Host "Owner and repo: $env:GITHUB_REPOSITORY"
       - name: test_env
-        env:
-          DATA: "{}"
+        id: test_env
         run: |
-          $data = $env:GITHUB_REPOSITORY -split "/" >> $env.DATA
-          $data[0]
-          $data[1]
-          Write-Host "${{ toJSON($env:DATA) }}"
+          $data = $env:GITHUB_REPOSITORY -split "/"
+          $data[0] >> $GITHUB_OUTPUT
+          $data[1] >> $GITHUB_OUTPUT
+          
+      - name: getData
+        run: |
+          Write-Host ${{ steps.test_env.outputs.* }}
           
 #        id: testCustomAction
 #        uses: AndyP01/tc3-twincat-build-action@v3
