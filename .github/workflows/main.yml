@@ -22,7 +22,7 @@ jobs:
           
       - name: ben_action_test
         id: ben_action_test
-        uses: benhar-dev/github-action-helloworld
+        uses: benhar-dev/github-action-helloworld@v2
         with:
           projectName: 'Project xyz'
             
