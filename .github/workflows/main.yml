@@ -20,11 +20,11 @@ jobs:
           Write-Host "Github Ref: $env:GITHUB_REF"
           Write-Host "Owner and repo: $env:GITHUB_REPOSITORY"
           
-      - name: ben_action_test
-        id: ben_action_test
-        uses: AndyP01/tc3-twincat-build-action@v4
+      - name: tc3_build_action_test
+        id: tc3_build_action_test
+        uses: AndyP01/tc3-twincat-build-action@v1
         with:
-          projectName: "Project` xyz"
+          targetNetId: "192.168.4.1.1.1"
             
 #  checkout:
 #    name: Checkout project job
