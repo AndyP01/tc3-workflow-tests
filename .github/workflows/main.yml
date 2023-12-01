@@ -24,7 +24,7 @@ jobs:
         id: ben_action_test
         uses: benhar-dev/github-action-helloworld@v3
         with:
-          projectName: "Project xyz"
+          projectName: "Project` xyz"
             
 #  checkout:
 #    name: Checkout project job
