@@ -22,7 +22,7 @@ jobs:
           
       - name: ben_action_test
         id: ben_action_test
-        uses: AndyP01/tc3-build-actiond@v4
+        uses: AndyP01/tc3-twincat-build-action@v4
         with:
           projectName: "Project` xyz"
             
