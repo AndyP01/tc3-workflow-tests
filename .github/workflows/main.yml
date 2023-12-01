@@ -20,56 +20,40 @@ jobs:
           Write-Host "Github Ref: $env:GITHUB_REF"
           Write-Host "Owner and repo: $env:GITHUB_REPOSITORY"
           
-      - name: test_env
-        id: test_env
-        run: |
-          $data = $env:GITHUB_REPOSITORY.Split("/") 
-          $data[0]
-          $data[1]
-          Write-Output "owner=$data[0]" >> $env:GITHUB_OUTPUT
-          Write-Output "repo_name=$data[1]" >> $env:GITHUB_OUTPUT
-          
-      - name: getData
-        run: |
-          Write-Host ${{ steps.test_env.outputs.owner }}
-          Write-Host ${{ steps.test_env.outputs.repo_name }}
-          
-#        id: testCustomAction
-#        uses: AndyP01/tc3-twincat-build-action@v3
-#        with:
-#          targetNetId: '192.168.5.1.1.1'
-#      - name: getOutput
-#        run: Write-Host ${{ steps.testCustomAction.outputs.exitCode }}
+      - name: ben_action_test
+        id: ben_action_test
+        uses: benhar-dev/github-action-helloworld
+        with:
+          projectName: 'Project xyz'
             
-  checkout:
-    name: Checkout project job
-    runs-on: VBox-3.1.4024
-    steps:
-      # Checks-out repository under $GITHUB_WORKSPACE, so job can access it
-      - name: Checking out project
-        uses: actions/checkout@v4
+#  checkout:
+#    name: Checkout project job
+#    runs-on: VBox-3.1.4024
+#    steps:
+#      # Checks-out repository under $GITHUB_WORKSPACE, so job can access it
+#      - name: Checking out project
+#        uses: actions/checkout@v4
         
-  preBuild:
-    name: Pre-build job
-    needs: [checkout]
-    runs-on: VBox-3.1.4024
-    steps:
-      - name: Run pre-build script
-        run: ./scripts/pre-build-script.ps1
+#  preBuild:
+#    name: Pre-build job
+#    needs: [checkout]
+#    runs-on: VBox-3.1.4024
+#    steps:
+#      - name: Run pre-build script
+#        run: ./scripts/pre-build-script.ps1
         
-  build:
-    name: Build job
-    needs: [preBuild]
-    runs-on: VBox-3.1.4024
-    steps:
-      - name: Run build script
-        run: ./scripts/build-script.ps1
+#  build:
+#    name: Build job
+#    needs: [preBuild]
+#   runs-on: VBox-3.1.4024
+#    steps:
+#      - name: Run build script
+#        run: ./scripts/build-script.ps1
 
-  postBuild:
-    name: Post-build job
-    needs: [build]
-    runs-on: VBox-3.1.4024
-    steps:
-      - name: Run post-build script
-        run: ./scripts/post-build-script.ps1
-      
+#  postBuild:
+#    name: Post-build job
+#    needs: [build]
+#    runs-on: VBox-3.1.4024
+#    steps:
+#      - name: Run post-build script
+#        run: ./scripts/post-build-script.ps1
