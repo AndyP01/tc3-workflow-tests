@@ -22,7 +22,7 @@ jobs:
           
       - name: tc3_build_action_test
         id: tc3_build_action_test
-        uses: AndyP01/tc3-twincat-build-action@v1
+        uses: AndyP01/tc3-twincat-build-action@v2
         with:
           targetNetId: "192.168.4.1.1.1"
             
