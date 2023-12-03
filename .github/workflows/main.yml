@@ -23,9 +23,9 @@ jobs:
       - name: tc3_build_action_test
         uses: AndyP01/tc3-twincat-build-action@v2
         with:
-          solutionPath: "C:\temp\temp.sln"
-          targetNetId: "192.168.4.1.1.1"
-          targetPlatform: "TwinCAT RT (x64)"
+          solutionPath: &"C:/temp/temp.sln"
+          targetNetId: &"192.168.4.1.1.1"
+          targetPlatform: &"TwinCAT RT (x64)"
             
 #  checkout:
 #    name: Checkout project job
