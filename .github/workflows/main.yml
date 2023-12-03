@@ -21,9 +21,11 @@ jobs:
           Write-Host "Owner and repo: $env:GITHUB_REPOSITORY"
           
       - name: tc3_build_action_test
-        uses: AndyP01/tc3-twincat-build-action@v7
+        uses: AndyP01/tc3-twincat-build-action
         with:
+          solutionPath: "C:\temp\temp.sln"
           targetNetId: "192.168.4.1.1.1"
+          targetPlatform: "TwinCAT RT (x64)"
             
 #  checkout:
 #    name: Checkout project job
