@@ -1,9 +1,9 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - main
+  #push:
+  #  branches:
+  #    - main
     
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -21,11 +21,12 @@ jobs:
           Write-Host "Owner and repo: $env:GITHUB_REPOSITORY"
           
       - name: tc3_build_action_test
-        uses: AndyP01/tc3-twincat-build-action@v5
+        uses: AndyP01/tc3-twincat-build-action@v1
         with:
-          solutionPath: '"C:/temp/temp.sln"'
-          targetNetId: '"192.168.4.1.1.1"'
-          targetPlatform: '"TwinCAT RT (x64)"'
+          solution-path: '"C:/temp/temp.sln"'
+          target-netiid: '"192.168.4.1.1.1"'
+          target-platform: '"TwinCAT RT (x64)"'
+          vs-shell: '"TcXaeShell.DTE.15.0"'
             
 #  checkout:
 #    name: Checkout project job
