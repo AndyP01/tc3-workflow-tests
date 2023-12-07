@@ -10,11 +10,11 @@ on:
 
 jobs:
     
-  info:
-    name: Workflow information
+  build:
+    name: Build solution
     runs-on: VBox-3.1.4024
     steps:
-      - name: Display workflow information
+      - name: Workflow information
         run: |
           Write-Host "Triggered by $env:GITHUB_ACTOR"
           Write-Host "Github Ref: $env:GITHUB_REF"
@@ -26,4 +26,4 @@ jobs:
           target-net-id: '"192.168.4.1.1.1"'
           target-platform: '"TwinCAT RT (x64)"'
           vs-shell: '"TcXaeShell.DTE.15.0"'
-          
+   
