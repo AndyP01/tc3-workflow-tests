@@ -19,7 +19,10 @@ jobs:
           Write-Host "Triggered by $env:GITHUB_ACTOR"
           Write-Host "Github Ref: $env:GITHUB_REF"
           Write-Host "Owner and repo: $env:GITHUB_REPOSITORY"
-          
+
+      - name: checkout
+        uses: actions/checkout@v4
+
       - name: tc3_build_action
         uses: AndyP01/tc3-twincat-build-action@v1
         with:
