@@ -23,39 +23,7 @@ jobs:
       - name: tc3_build_action_test
         uses: AndyP01/tc3-twincat-build-action@v1
         with:
-          solution-path: '"${{ github.workspace }}/src/temp/temp.sln"'
-          target-netiid: '"192.168.4.1.1.1"'
+          target-net-id: '"192.168.4.1.1.1"'
           target-platform: '"TwinCAT RT (x64)"'
           vs-shell: '"TcXaeShell.DTE.15.0"'
-            
-#  checkout:
-#    name: Checkout project job
-#    runs-on: VBox-3.1.4024
-#    steps:
-#      # Checks-out repository under $GITHUB_WORKSPACE, so job can access it
-#      - name: Checking out project
-#        uses: actions/checkout@v4
-        
-#  preBuild:
-#    name: Pre-build job
-#    needs: [checkout]
-#    runs-on: VBox-3.1.4024
-#    steps:
-#      - name: Run pre-build script
-#        run: ./scripts/pre-build-script.ps1
-        
-#  build:
-#    name: Build job
-#    needs: [preBuild]
-#   runs-on: VBox-3.1.4024
-#    steps:
-#      - name: Run build script
-#        run: ./scripts/build-script.ps1
-
-#  postBuild:
-#    name: Post-build job
-#    needs: [build]
-#    runs-on: VBox-3.1.4024
-#    steps:
-#      - name: Run post-build script
-#        run: ./scripts/post-build-script.ps1
+          
