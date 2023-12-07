@@ -20,10 +20,10 @@ jobs:
           Write-Host "Github Ref: $env:GITHUB_REF"
           Write-Host "Owner and repo: $env:GITHUB_REPOSITORY"
           
-      - name: tc3_build_action_test
+      - name: tc3_build_action
         uses: AndyP01/tc3-twincat-build-action@v1
         with:
-          target-net-id: '"192.168.4.1.1.1"'
+          target-net-id: "192.168.4.1.1.1"
           target-platform: '"TwinCAT RT (x64)"'
-          vs-shell: '"TcXaeShell.DTE.15.0"'
+          vs-shell: "TcXaeShell.DTE.15.0"
    
