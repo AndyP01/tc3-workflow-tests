@@ -27,7 +27,7 @@ jobs:
       - name: tc3_build_action
         uses: AndyP01/tc3-twincat-build-action@v1
         with:
-          solution-path: '"${{ github.workspace }}/src/mobject-disposable-library/mobject-disposable.sln"'
+          solution-path: "${{ github.workspace }}/src/mobject-disposable-library/mobject-disposable.sln"
           target-net-id: "192.168.4.1.1.1"
           target-platform: '"TwinCAT RT (x64)"'
           vs-shell: "TcXaeShell.DTE.15.0"
