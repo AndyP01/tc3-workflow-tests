@@ -31,5 +31,5 @@ jobs:
           target-net-id: "192.168.4.1.1.1"
           target-platform: '"TwinCAT RT (x64)"'
           vs-shell: "TcXaeShell.DTE.15.0"
-          #display-ui: "$true"
+          vs-silent: "$true"
    
