@@ -20,6 +20,7 @@ jobs:
           Write-Host "Github Ref: $env:GITHUB_REF"
           Write-Host "Owner and repo: $env:GITHUB_REPOSITORY"
           Write-Host "Github workspace: $env:GITHUB_WORKSPACE"
+          Write-Host "Github action dir: $env:GITHUB_ACTION_PATH"
 
       - name: checkout
         uses: actions/checkout@v4
