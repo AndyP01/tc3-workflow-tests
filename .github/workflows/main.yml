@@ -14,11 +14,6 @@ jobs:
     name: Build solution
     runs-on: VBox-3.1.4024
     steps:
-      - name: Dump GitHub context
-        env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-        run: echo "$env:GITHUB_CONTEXT"
-        
       - name: Workflow information
         run: |
           echo "Triggered by $env:GITHUB_ACTOR"
