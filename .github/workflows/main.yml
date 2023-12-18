@@ -16,11 +16,11 @@ jobs:
     steps:
       - name: Workflow information
         run: |
-          Write-Host "Triggered by $env:GITHUB_ACTOR"
-          Write-Host "Github Ref: $env:GITHUB_REF"
-          Write-Host "Owner and repo: $env:GITHUB_REPOSITORY"
-          Write-Host "Github workspace: $env:GITHUB_WORKSPACE"
-          Write-Host "Github action dir: $env:GITHUB_ACTION_PATH"
+          echo "Triggered by $env:GITHUB_ACTOR"
+          echo "Github Ref: $env:GITHUB_REF"
+          echo "Owner and repo: $env:GITHUB_REPOSITORY"
+          echo "Github workspace: $env:GITHUB_WORKSPACE"
+          echo "Github action dir: $env:GITHUB_ACTION_PATH"
 
       - name: checkout
         uses: actions/checkout@v4
