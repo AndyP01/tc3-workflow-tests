@@ -20,8 +20,7 @@ jobs:
           echo "Github Ref: $env:GITHUB_REF"
           echo "Owner and repo: $env:GITHUB_REPOSITORY"
           echo "Github workspace: $env:GITHUB_WORKSPACE"
-          echo "Github action dir: $env:GITHUB_ACTION_PATH"
-
+         
       - name: checkout
         uses: actions/checkout@v4
 
